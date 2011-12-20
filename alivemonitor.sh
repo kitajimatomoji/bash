@@ -29,3 +29,9 @@ if [ "'${slaveio}'" ne "'Yes'" ] || [ "'${slavesql}'" ne "'Yes'" ]; then
   mail alert@example.com -s 'WARNING - MySQL Slave is not running'
 fi
 
+# Apache ######################################################################
+RESULTCODE=`wget -S --spider -nv http://example.com 2>&1|grep -c "200 OK"`
+if [ $RESULTCODE != 1 ]; then
+  mail alert@example.com -s 'WARNING - HTTPD is not alive'
+fi
+

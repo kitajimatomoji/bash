@@ -19,13 +19,13 @@ fi
 # MySQL #######################################################################
 mystat=`mysqladmin ping -uuser -ppasswd`
 
-if [ "'${mystat}'" != "'mysqld is alive'" ]; then
+if [ "'${mystat}'" ne "'mysqld is alive'" ]; then
   echo ${mystat}|mail alert@example.com -s 'WARNING - MySQL is not alive'
 fi
 
 slaveio=`echo 'show slave status\G' | mysql -uuser -ppasswd | grep 'Slave_IO_Running' | awk '{print $NF}' FS=':' | sed 's/ //'`
 slavesql=`echo 'show slave status\G' | mysql -uuser -ppasswd | grep 'Slave_SQL_Running' | awk '{print $NF}' FS=':' | sed 's/ //'`
-if [ "'${slaveio}'" != "'Yes'" ] || [ "'${slavesql}'" != "'Yes'" ]; then
+if [ "'${slaveio}'" ne "'Yes'" ] || [ "'${slavesql}'" ne "'Yes'" ]; then
   mail alert@example.com -s 'WARNING - MySQL Slave is not running'
 fi
 
